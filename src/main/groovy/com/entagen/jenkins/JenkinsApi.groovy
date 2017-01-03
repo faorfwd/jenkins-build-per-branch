@@ -23,12 +23,9 @@ class JenkinsApi {
         if (!jenkinsServerUrl.endsWith("/")) jenkinsServerUrl += "/"
         this.jenkinsServerUrl = jenkinsServerUrl
         this.restClient = new RESTClient(jenkinsServerUrl)
-		if(this.jenkinsServerUrl.length() > this.jenkinsServerUrl.indexOf("/") + 1) {
-			this.rootRestClient = new RESTClient(this.jenkinsServerUrl.substring(0,this.jenkinsServerUrl.indexOf("/")))
-		} else {
-			this.rootRestClient = this.restClient
-		}
-    }
+		def aURL = new URL(this.jenkinsServerUrl)
+		this.rootRestClient = new RESTClient(aURL.getProtocol()+":"+aURL.getAuthority()+"/")
+	}
 
     public void addBasicAuth(String jenkinsServerUser, String jenkinsServerPassword) {
         println "use basic authentication"
