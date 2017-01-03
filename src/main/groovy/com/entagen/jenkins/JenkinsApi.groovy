@@ -171,7 +171,8 @@ class JenkinsApi {
             findCrumb = false
             println "Trying to find crumb: ${jenkinsServerUrl}crumbIssuer/api/json"
             try {
-                def response = restClient.get(path: "crumbIssuer/api/json")
+				// make sure we allways fetch the crumb issuer from the root url
+                def response = restClient.get(path: "crumbIssuer/api/json", defaultURI: jenkinsServerUrl.subString(0,jenkinsServerUrl.indexOf("/")))
 
                 if (response.data.crumbRequestField && response.data.crumb) {
                     crumbInfo = [:]
