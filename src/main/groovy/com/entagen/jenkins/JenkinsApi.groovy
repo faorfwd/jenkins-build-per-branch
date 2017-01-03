@@ -23,7 +23,7 @@ class JenkinsApi {
         if (!jenkinsServerUrl.endsWith("/")) jenkinsServerUrl += "/"
         this.jenkinsServerUrl = jenkinsServerUrl
         this.restClient = new RESTClient(jenkinsServerUrl)
-		if(this.jenkinsServerUrl.length > this.jenkinsServerUrl.indexOf("/") + 1) {
+		if(this.jenkinsServerUrl.length() > this.jenkinsServerUrl.indexOf("/") + 1) {
 			this.rootRestClient = new RESTClient(this.jenkinsServerUrl.substring(0,this.jenkinsServerUrl.indexOf("/")))
 		} else {
 			this.rootRestClient = this.restClient
