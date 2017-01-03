@@ -24,7 +24,7 @@ class JenkinsApi {
         this.jenkinsServerUrl = jenkinsServerUrl
         this.restClient = new RESTClient(jenkinsServerUrl)
 		def aURL = new URL(this.jenkinsServerUrl)
-		def rootUrl = aURL.getProtocol()+":"+aURL.getAuthority()+"/"
+		def rootUrl = aURL.getProtocol()+"://"+aURL.getAuthority()+"/"
 		println rootUrl
 		this.rootRestClient = new RESTClient(rootUrl)
 	}
