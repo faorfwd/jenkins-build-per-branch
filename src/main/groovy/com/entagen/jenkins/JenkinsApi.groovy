@@ -14,6 +14,7 @@ import org.apache.http.HttpRequest
 class JenkinsApi {
     String jenkinsServerUrl
     RESTClient restClient
+    RESTClient rootRestClient
     HttpRequestInterceptor requestInterceptor
     boolean findCrumb = true
     def crumbInfo
@@ -22,6 +23,11 @@ class JenkinsApi {
         if (!jenkinsServerUrl.endsWith("/")) jenkinsServerUrl += "/"
         this.jenkinsServerUrl = jenkinsServerUrl
         this.restClient = new RESTClient(jenkinsServerUrl)
+		if(this.jenkinsServerUrl.length > this.jenkinsServerUrl.indexOf("/") + 1) {
+			this.rootRestClient = new RESTClient(this.jenkinsServerUrl.substring(0,this.jenkinsServerUrl.indexOf("/")))
+		} else {
+			this.rootRestClient = this.restClient
+		}
     }
 
     public void addBasicAuth(String jenkinsServerUser, String jenkinsServerPassword) {
@@ -35,6 +41,7 @@ class JenkinsApi {
         }
 
         this.restClient.client.addRequestInterceptor(this.requestInterceptor)
+        this.rootRestClient.client.addRequestInterceptor(this.requestInterceptor)
     }
 
     List<String> getJobNames(String prefix = null) {
@@ -172,7 +179,7 @@ class JenkinsApi {
             println "Trying to find crumb: ${jenkinsServerUrl}crumbIssuer/api/json"
             try {
 				// make sure we allways fetch the crumb issuer from the root url
-                def response = restClient.get(path: "crumbIssuer/api/json", defaultURI: jenkinsServerUrl.substring(0,jenkinsServerUrl.indexOf("/")))
+                def response = rootRestClient.get(path: "crumbIssuer/api/json")
 
                 if (response.data.crumbRequestField && response.data.crumb) {
                     crumbInfo = [:]
