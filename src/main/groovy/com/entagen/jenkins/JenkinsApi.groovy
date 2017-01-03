@@ -24,7 +24,9 @@ class JenkinsApi {
         this.jenkinsServerUrl = jenkinsServerUrl
         this.restClient = new RESTClient(jenkinsServerUrl)
 		def aURL = new URL(this.jenkinsServerUrl)
-		this.rootRestClient = new RESTClient(aURL.getProtocol()+":"+aURL.getAuthority()+"/")
+		def rootUrl = aURL.getProtocol()+":"+aURL.getAuthority()+"/"
+		println rootUrl
+		this.rootRestClient = new RESTClient(rootUrl)
 	}
 
     public void addBasicAuth(String jenkinsServerUser, String jenkinsServerPassword) {
