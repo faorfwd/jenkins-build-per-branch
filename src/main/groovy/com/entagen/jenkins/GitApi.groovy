@@ -4,6 +4,7 @@ import java.util.regex.Pattern
 
 class GitApi {
     String gitUrl
+	String gitBaseBranch = "development"
     Pattern branchNameFilter = null
 
     public List<String> getBranchNames() {
@@ -20,6 +21,18 @@ class GitApi {
             if (selected) branchNames << branchName
         }
 
+		command = "git branch -r --merged ${gitBaseBranch}"
+		
+		eachResultLine(command) { String line -> 
+			String branchNameRegex = "^.*origin/(.*)\$"
+            String branchName = line.find(branchNameRegex) { full, branchName -> branchName }
+			Boolean deselected = branchName != gitBaseBranch && branchNames.contains(branchName)
+			if(deselected) {
+				println "REMOVING $branchName as merged into $gitBaseBranch"
+				branchNames -= [branchName]
+			}
+		}
+		
         return branchNames
     }
 
