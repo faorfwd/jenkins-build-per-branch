@@ -42,7 +42,8 @@ class GitApi {
 					}
 				}
 				
-				"rmdir /S /Q \"${uuid}\"".execute()
+				def subDir = new File(uuid)
+				subDir.deleteDir()
 			}
 		}
         return branchNames
