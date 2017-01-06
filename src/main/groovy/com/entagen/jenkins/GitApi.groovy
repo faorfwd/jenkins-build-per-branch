@@ -41,6 +41,8 @@ class GitApi {
 						branchNames -= [branchName]
 					}
 				}
+				
+				"rmdir ${uuid}".execute()
 			}
 		}
         return branchNames
