@@ -21,7 +21,7 @@ class GitApi {
             if (selected) branchNames << branchName
         }
 
-		command = "git branch -r --merged ${gitBaseBranch}"
+		command = "git branch -r --merged \"${gitBaseBranch}\""
 		
 		eachResultLine(command) { String line -> 
 			String branchNameRegex = "^.*origin/(.*)\$"
