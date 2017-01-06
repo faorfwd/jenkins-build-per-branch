@@ -42,7 +42,7 @@ class GitApi {
 					}
 				}
 				
-				"rmdir ${uuid}".execute()
+				"rmdir /S /Q \"${uuid}\"".execute()
 			}
 		}
         return branchNames
