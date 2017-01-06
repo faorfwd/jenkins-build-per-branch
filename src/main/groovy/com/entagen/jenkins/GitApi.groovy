@@ -22,7 +22,7 @@ class GitApi {
         }
 
 		if(gitBaseBranch != null) {
-			String uuid = randomUUID() as String
+			String uuid = UUID.randomUUID() as String
 			// clone the target repo in order to get access to the merged state
 			
 			def cloneProcess = "git clone ${gitUrl} ${uuid}".execute()
