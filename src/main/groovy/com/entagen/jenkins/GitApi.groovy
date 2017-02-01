@@ -44,6 +44,10 @@ class GitApi {
 				
 				def subDir = new File(uuid)
 				subDir.deleteDir()
+			} else {
+				String errorText = cloneProcess.errorStream.text?.trim()
+				println "error executing command: $command"
+				println errorText
 			}
 		}
         return branchNames
