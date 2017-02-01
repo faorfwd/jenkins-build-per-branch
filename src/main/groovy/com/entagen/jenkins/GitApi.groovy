@@ -25,12 +25,12 @@ class GitApi {
 			String uuid = UUID.randomUUID() as String
 			// clone the target repo in order to get access to the merged state
 			
-			def cloneProcess = "git clone -q ${gitUrl} ${uuid}".execute()
+			def cloneProcess = "git clone -b ${gitBaseBranch} -q ${gitUrl} ${uuid}".execute()
 			cloneProcess.waitFor()
 			
 			if(cloneProcess.exitValue() == 0) {
 				// check the list of merged branches into the base one
-				command = "git branch -r --merged \"remotes/origin/${gitBaseBranch}\""
+				command = "git branch -r --merged \"${gitBaseBranch}\""
 				
 				eachResultLine(command) { String line -> 
 					String branchNameRegex = "^.*origin/(.*)\$"
