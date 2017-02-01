@@ -30,7 +30,7 @@ class GitApi {
 			
 			if(cloneProcess.exitValue() == 0) {
 				// check the list of merged branches into the base one
-				command = "git branch -r --merged \"origin/${gitBaseBranch}\""
+				command = "git branch -r --merged \"remotes/origin/${gitBaseBranch}\""
 				
 				eachResultLine(command) { String line -> 
 					String branchNameRegex = "^.*origin/(.*)\$"
