@@ -25,7 +25,7 @@ class GitApi {
 			String uuid = UUID.randomUUID() as String
 			// clone the target repo in order to get access to the merged state
 			
-			def cloneProcess = "git clone -b ${gitBaseBranch} ${gitUrl} ${uuid}".execute()
+			def cloneProcess = "git clone ${gitUrl} ${uuid}".execute()
 			cloneProcess.waitFor()
 			
 			if(cloneProcess.exitValue() == 0) {
